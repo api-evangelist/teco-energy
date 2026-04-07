@@ -1,7 +1,12 @@
 aid: teco-energy
-url: https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml
 modified: '2026-03-24'
 apis: []
 common:
   - type: Website
     url: https://www.teco-energy.com
+description: >-
+  TECO Energy was an energy-related holding company whose principal subsidiary, Tampa
+  Electric, is a regulated electric utility serving customers in west central Florida,
+  before being acquired by Emera.
