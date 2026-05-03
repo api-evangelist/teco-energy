@@ -1,0 +1,16 @@
+{
+  "title": "Tampa Electric Outage Structure",
+  "description": "Field-level documentation for Tampa Electric outage event objects.",
+  "type": "object",
+  "fields": [
+    {"name": "outageId", "type": "string", "required": true, "description": "Unique outage event identifier (e.g., OT-2026-042801)."},
+    {"name": "status", "type": "string (enum)", "required": true, "description": "Outage status: active, assessing, or restored.", "values": ["active", "assessing", "restored"]},
+    {"name": "cause", "type": "string (enum)", "required": false, "description": "Cause category: weather, equipment, animal, vegetation, vehicle, or unknown."},
+    {"name": "customersAffected", "type": "integer", "required": true, "description": "Count of customers without power."},
+    {"name": "affectedArea", "type": "object", "required": false, "description": "Geographic scope with ZIP codes, county, and city."},
+    {"name": "outageStartTime", "type": "string (date-time)", "required": true, "description": "UTC timestamp when outage began."},
+    {"name": "estimatedRestorationTime", "type": "string (date-time) | null", "required": false, "description": "ERT in UTC. Null while crews are still assessing."},
+    {"name": "actualRestorationTime", "type": "string (date-time) | null", "required": false, "description": "Actual restoration time. Null while outage is active."},
+    {"name": "lastUpdated", "type": "string (date-time)", "required": false, "description": "Last status update timestamp."}
+  ]
+}

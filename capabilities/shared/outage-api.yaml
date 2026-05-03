@@ -1,0 +1,180 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Tampa Electric Outage API"
+  description: "Power outage reporting, tracking, and map data for the Tampa Electric service territory."
+  tags:
+    - TECO Energy
+    - Tampa Electric
+    - Outage Management
+    - Electric Utility
+    - Grid Operations
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TECO_API_TOKEN: TECO_API_TOKEN
+
+capability:
+  consumes:
+    - type: http
+      namespace: teco-outage
+      baseUri: https://api.tecoenergy.com/v1
+      description: "Tampa Electric Outage API for reporting and tracking power outages."
+      authentication:
+        type: bearer
+        token: "{{TECO_API_TOKEN}}"
+      resources:
+        - name: outages
+          path: /outages
+          description: "Active power outages in the Tampa Electric service territory."
+          operations:
+            - name: list-outages
+              method: GET
+              description: "List active outages, filtered by county or ZIP code."
+              inputParameters:
+                - name: county
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter outages by Florida county name."
+                - name: zipCode
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter outages by ZIP code."
+                - name: status
+                  in: query
+                  type: string
+                  required: false
+                  description: "Filter by outage status (active, restored, assessing)."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-outage
+              method: GET
+              description: "Get details for a specific outage event."
+              inputParameters:
+                - name: outageId
+                  in: path
+                  type: string
+                  required: true
+                  description: "Unique outage event identifier."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: report-outage
+              method: POST
+              description: "Submit a power outage report for a service address."
+              body:
+                type: json
+                data:
+                  accountNumber: "{{tools.accountNumber}}"
+                  serviceAddress: "{{tools.serviceAddress}}"
+                  hazardObserved: "{{tools.hazardObserved}}"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: get-outage-map
+              method: GET
+              description: "Retrieve geographic outage map data."
+              inputParameters:
+                - name: bounds
+                  in: query
+                  type: string
+                  required: false
+                  description: "Geographic bounding box."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: teco-outage-rest
+      resources:
+        - path: /v1/outages
+          name: outages
+          operations:
+            - method: GET
+              name: list-outages
+              description: "List Tampa Electric power outages."
+              call: "teco-outage.list-outages"
+              with:
+                county: "rest.county"
+                zipCode: "rest.zipCode"
+                status: "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/outages/{outageId}
+          name: outage
+          operations:
+            - method: GET
+              name: get-outage
+              description: "Get Tampa Electric outage details."
+              call: "teco-outage.get-outage"
+              with:
+                outageId: "rest.outageId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: teco-outage-mcp
+      transport: http
+      tools:
+        - name: list-outages
+          description: "List active Tampa Electric power outages by county or ZIP."
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "teco-outage.list-outages"
+          with:
+            county: "tools.county"
+            zipCode: "tools.zipCode"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-outage
+          description: "Get detailed information about a specific Tampa Electric outage."
+          hints:
+            readOnly: true
+          call: "teco-outage.get-outage"
+          with:
+            outageId: "tools.outageId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: report-outage
+          description: "Report a power outage at a Tampa Electric service address."
+          hints:
+            readOnly: false
+            destructive: false
+          call: "teco-outage.report-outage"
+          with:
+            accountNumber: "tools.accountNumber"
+            serviceAddress: "tools.serviceAddress"
+            hazardObserved: "tools.hazardObserved"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-outage-map
+          description: "Get geographic outage map data for Tampa Electric service territory."
+          hints:
+            readOnly: true
+          call: "teco-outage.get-outage-map"
+          outputParameters:
+            - type: object
+              mapping: "$."

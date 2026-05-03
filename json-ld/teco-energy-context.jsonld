@@ -1,0 +1,51 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "teco": "https://www.tecoenergy.com/",
+    "energy": "https://ontology.teco-energy.com/",
+
+    "Outage": "schema:Event",
+    "outageId": "schema:identifier",
+    "status": "schema:status",
+    "cause": "schema:description",
+    "customersAffected": "schema:numberOfItems",
+    "affectedArea": "schema:areaServed",
+    "outageStartTime": "schema:startDate",
+    "estimatedRestorationTime": "schema:endDate",
+    "actualRestorationTime": "schema:endDate",
+    "lastUpdated": "schema:dateModified",
+
+    "Account": "schema:BankAccount",
+    "accountNumber": "schema:identifier",
+    "customerName": "schema:name",
+    "serviceAddress": "schema:address",
+    "accountType": "schema:accountType",
+    "serviceType": "energy:serviceType",
+    "currentBalance": "schema:price",
+    "dueDate": "schema:paymentDue",
+    "paperlessBilling": "energy:paperlessBilling",
+
+    "UsageRecord": "energy:UsageRecord",
+    "startTime": "schema:startDate",
+    "endTime": "schema:endDate",
+    "usage": "energy:kwhUsage",
+    "cost": "schema:price",
+    "temperature": "schema:value",
+
+    "Bill": "schema:Invoice",
+    "billId": "schema:identifier",
+    "billDate": "schema:dateIssued",
+    "dueDate": "schema:paymentDue",
+    "totalAmount": "schema:totalPrice",
+    "kwhUsed": "energy:kwhUsage",
+
+    "ServiceRequest": "schema:Order",
+    "requestId": "schema:orderNumber",
+    "type": "schema:orderType",
+
+    "zipCodes": "schema:postalCode",
+    "county": "schema:addressRegion",
+    "city": "schema:addressLocality"
+  }
+}

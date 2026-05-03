@@ -1,0 +1,141 @@
+vocabulary:
+  provider: TECO Energy / Tampa Electric
+  description: >-
+    Vocabulary for TECO Energy and Tampa Electric covering utility operations,
+    outage management, energy usage, billing, and customer service terms.
+  version: '2026-05-03'
+  terms:
+    - term: Tampa Electric
+      definition: >-
+        The principal electric utility subsidiary of TECO Energy, serving
+        approximately 800,000 customers in west central Florida including
+        Hillsborough, Polk, Pasco, and parts of Pinellas counties.
+      synonyms:
+        - TECO Electric
+        - Tampa Electric Company
+      relatedTerms:
+        - TECO Energy
+        - Peoples Gas
+
+    - term: Peoples Gas
+      definition: >-
+        A natural gas utility subsidiary of TECO Energy serving customers
+        throughout the state of Florida.
+      synonyms:
+        - TECO Gas
+      relatedTerms:
+        - TECO Energy
+        - Tampa Electric
+
+    - term: Outage
+      definition: >-
+        A disruption in electric service affecting one or more Tampa Electric
+        customers. Tracked by cause, affected customer count, estimated
+        restoration time, and geographic area.
+      synonyms:
+        - Power Outage
+        - Service Interruption
+      relatedTerms:
+        - Estimated Restoration Time
+        - Outage Map
+        - Service Restoration
+
+    - term: Estimated Restoration Time
+      definition: >-
+        The projected time by which power is expected to be restored to
+        affected customers. Updated as crews assess and work on the outage.
+      synonyms:
+        - ERT
+        - Estimated Time of Restoration
+        - ETR
+      relatedTerms:
+        - Outage
+
+    - term: Outage Cause
+      definition: >-
+        The classified reason for a power outage. Categories include weather,
+        equipment failure, animal contact, vegetation, vehicle accident, or
+        unknown pending investigation.
+      values:
+        - weather
+        - equipment
+        - animal
+        - vegetation
+        - vehicle
+        - unknown
+
+    - term: kWh
+      definition: >-
+        Kilowatt-hour - the unit of electrical energy consumption used by
+        Tampa Electric to measure and bill customer usage. One kWh equals
+        1,000 watts used for one hour.
+      synonyms:
+        - Kilowatt Hour
+        - Energy Unit
+
+    - term: Account Number
+      definition: >-
+        The unique customer identifier assigned by Tampa Electric for account
+        management, billing, and service requests.
+      relatedTerms:
+        - Customer Account
+        - Billing
+
+    - term: Service Territory
+      definition: >-
+        The geographic area in which Tampa Electric is authorized to provide
+        electric service, covering west central Florida including Tampa,
+        Brandon, Clearwater (partial), and surrounding communities.
+      relatedTerms:
+        - Tampa Electric
+
+    - term: Green Button
+      definition: >-
+        An industry standard for enabling utility customers to securely access
+        their energy usage data. Tampa Electric's API infrastructure supports
+        programmatic access to interval usage data consistent with Green Button
+        Connect My Data (CMD) standards.
+      synonyms:
+        - Green Button Connect My Data
+        - CMD
+      relatedTerms:
+        - Usage Data
+        - Smart Meter
+
+    - term: Smart Meter
+      definition: >-
+        Advanced digital electricity meters deployed by Tampa Electric that
+        enable two-way communication, interval usage data collection, and
+        remote service operations.
+      synonyms:
+        - Advanced Meter
+        - AMI Meter
+      relatedTerms:
+        - Green Button
+        - Usage Data
+
+    - term: Paperless Billing
+      definition: >-
+        Tampa Electric's electronic billing program allowing customers to
+        receive bills via email and access statements through the account
+        portal or API instead of paper mail.
+      relatedTerms:
+        - Billing
+        - Customer Account
+
+    - term: Service Request
+      definition: >-
+        A formal request submitted by a customer for Tampa Electric to
+        perform an action such as starting service at a new address, stopping
+        service, transferring service, or requesting a meter read.
+      synonyms:
+        - Work Order
+        - Customer Request
+      values:
+        - start-service
+        - stop-service
+        - transfer-service
+        - meter-read
+        - tree-trimming
+        - streetlight-repair
+        - general-inquiry

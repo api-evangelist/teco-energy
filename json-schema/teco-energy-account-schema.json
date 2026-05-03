@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/teco-energy/main/json-schema/teco-energy-account-schema.json",
+  "title": "Tampa Electric Customer Account",
+  "description": "A Tampa Electric customer account for electric or gas utility service.",
+  "type": "object",
+  "properties": {
+    "accountNumber": {
+      "type": "string",
+      "description": "Unique customer account number."
+    },
+    "customerName": {
+      "type": "string",
+      "description": "Account holder name."
+    },
+    "serviceAddress": {
+      "type": "object",
+      "properties": {
+        "streetAddress": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string", "default": "FL" },
+        "zipCode": { "type": "string", "pattern": "^[0-9]{5}$" }
+      },
+      "required": ["streetAddress", "zipCode"]
+    },
+    "accountType": {
+      "type": "string",
+      "enum": ["residential", "commercial", "industrial"]
+    },
+    "serviceType": {
+      "type": "string",
+      "enum": ["electric", "gas", "electric-and-gas"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive", "pending"]
+    },
+    "currentBalance": {
+      "type": "number",
+      "format": "double",
+      "description": "Current account balance in USD."
+    },
+    "dueDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Payment due date for current balance."
+    },
+    "paperlessBilling": {
+      "type": "boolean",
+      "description": "Whether paperless billing is enabled."
+    }
+  },
+  "required": ["accountNumber", "customerName", "serviceAddress", "accountType", "serviceType", "status"]
+}

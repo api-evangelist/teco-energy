@@ -1,0 +1,97 @@
+extends:
+  - spectral:oas
+
+rules:
+  teco-energy-operation-ids-camel-case:
+    description: Operation IDs must use camelCase naming convention.
+    message: "Operation ID '{{value}}' must use camelCase."
+    severity: warn
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  teco-energy-bearer-auth-required:
+    description: All non-public endpoints must use bearer authentication.
+    message: "Operation should define bearer security scheme."
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: security
+      function: truthy
+
+  teco-energy-responses-have-descriptions:
+    description: All responses must have descriptions.
+    message: "Response must include a description."
+    severity: error
+    given: "$.paths[*][*].responses[*]"
+    then:
+      field: description
+      function: truthy
+
+  teco-energy-operations-have-tags:
+    description: All operations must be tagged.
+    message: "Operation must have at least one tag."
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: tags
+      function: truthy
+
+  teco-energy-operations-have-summaries:
+    description: All operations must have a summary.
+    message: "Operation must include a summary."
+    severity: error
+    given: "$.paths[*][*]"
+    then:
+      field: summary
+      function: truthy
+
+  teco-energy-title-case-summaries:
+    description: Operation summaries must use Title Case.
+    message: "Summary '{{value}}' should use Title Case."
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 ]*$"
+
+  teco-energy-account-number-in-path:
+    description: Account-scoped operations must use accountNumber path parameter.
+    message: "Account endpoints should use 'accountNumber' as the path parameter name."
+    severity: hint
+    given: "$.paths['/accounts/{accountNumber}'][*].parameters[*]"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+
+  teco-energy-servers-defined:
+    description: API must define at least one server.
+    message: "API must include a servers array."
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  teco-energy-components-schemas:
+    description: API must define reusable schemas in components.
+    message: "API should define schemas in components/schemas."
+    severity: warn
+    given: "$.components"
+    then:
+      field: schemas
+      function: truthy
+
+  teco-energy-security-schemes-defined:
+    description: API must define security schemes.
+    message: "API must define security schemes in components/securitySchemes."
+    severity: error
+    given: "$.components"
+    then:
+      field: securitySchemes
+      function: truthy

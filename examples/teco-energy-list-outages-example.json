@@ -1,0 +1,67 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.tecoenergy.com/v1/outages",
+    "headers": {
+      "Authorization": "Bearer {access_token}"
+    },
+    "parameters": {
+      "county": "Hillsborough",
+      "status": "active"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "totalOutages": 3,
+      "customersAffected": 1247,
+      "outages": [
+        {
+          "outageId": "OT-2026-042801",
+          "status": "active",
+          "cause": "weather",
+          "customersAffected": 842,
+          "affectedArea": {
+            "zipCodes": ["33602", "33603", "33604"],
+            "county": "Hillsborough",
+            "city": "Tampa"
+          },
+          "outageStartTime": "2026-04-28T14:23:00Z",
+          "estimatedRestorationTime": "2026-04-28T18:00:00Z",
+          "actualRestorationTime": null,
+          "lastUpdated": "2026-04-28T15:10:00Z"
+        },
+        {
+          "outageId": "OT-2026-042802",
+          "status": "assessing",
+          "cause": "unknown",
+          "customersAffected": 305,
+          "affectedArea": {
+            "zipCodes": ["33610"],
+            "county": "Hillsborough",
+            "city": "Tampa"
+          },
+          "outageStartTime": "2026-04-28T15:45:00Z",
+          "estimatedRestorationTime": null,
+          "actualRestorationTime": null,
+          "lastUpdated": "2026-04-28T16:00:00Z"
+        },
+        {
+          "outageId": "OT-2026-042803",
+          "status": "active",
+          "cause": "vegetation",
+          "customersAffected": 100,
+          "affectedArea": {
+            "zipCodes": ["33629"],
+            "county": "Hillsborough",
+            "city": "Tampa"
+          },
+          "outageStartTime": "2026-04-28T16:12:00Z",
+          "estimatedRestorationTime": "2026-04-28T20:00:00Z",
+          "actualRestorationTime": null,
+          "lastUpdated": "2026-04-28T16:30:00Z"
+        }
+      ]
+    }
+  }
+}

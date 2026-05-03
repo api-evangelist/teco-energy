@@ -1,0 +1,45 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "https://api.tecoenergy.com/v1/accounts/123456789/usage",
+    "headers": {
+      "Authorization": "Bearer {access_token}"
+    },
+    "parameters": {
+      "startDate": "2026-03-01",
+      "endDate": "2026-03-31",
+      "interval": "daily"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "accountNumber": "123456789",
+      "unit": "kWh",
+      "interval": "daily",
+      "usageData": [
+        {
+          "startTime": "2026-03-01T00:00:00Z",
+          "endTime": "2026-03-01T23:59:59Z",
+          "usage": 32.4,
+          "cost": 4.86,
+          "temperature": 74
+        },
+        {
+          "startTime": "2026-03-02T00:00:00Z",
+          "endTime": "2026-03-02T23:59:59Z",
+          "usage": 28.1,
+          "cost": 4.22,
+          "temperature": 71
+        },
+        {
+          "startTime": "2026-03-03T00:00:00Z",
+          "endTime": "2026-03-03T23:59:59Z",
+          "usage": 35.7,
+          "cost": 5.36,
+          "temperature": 79
+        }
+      ]
+    }
+  }
+}

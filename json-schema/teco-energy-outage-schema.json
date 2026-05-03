@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/teco-energy/main/json-schema/teco-energy-outage-schema.json",
+  "title": "Tampa Electric Outage",
+  "description": "A power outage event in the Tampa Electric service territory.",
+  "type": "object",
+  "properties": {
+    "outageId": {
+      "type": "string",
+      "description": "Unique identifier for the outage event."
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the outage.",
+      "enum": ["active", "restored", "assessing"]
+    },
+    "cause": {
+      "type": "string",
+      "description": "Reported or assessed cause of the outage.",
+      "enum": ["weather", "equipment", "animal", "vegetation", "vehicle", "unknown"]
+    },
+    "customersAffected": {
+      "type": "integer",
+      "description": "Number of customers currently affected by the outage.",
+      "minimum": 0
+    },
+    "affectedArea": {
+      "type": "object",
+      "description": "Geographic description of the outage area.",
+      "properties": {
+        "zipCodes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "county": {
+          "type": "string",
+          "description": "Florida county name."
+        },
+        "city": {
+          "type": "string"
+        }
+      }
+    },
+    "outageStartTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the outage was first reported or detected."
+    },
+    "estimatedRestorationTime": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Estimated time of power restoration. Null if unknown."
+    },
+    "actualRestorationTime": {
+      "type": ["string", "null"],
+      "format": "date-time",
+      "description": "Actual restoration time. Null if still active."
+    },
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the most recent status update."
+    }
+  },
+  "required": ["outageId", "status", "customersAffected", "outageStartTime"]
+}
