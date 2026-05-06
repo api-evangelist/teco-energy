@@ -1,258 +1,476 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "Tampa Electric Utility Operations"
-  description: >-
-    Unified utility operations capability for Tampa Electric (TECO Energy),
-    combining outage management and account services into a single workflow.
-    Enables customer service agents, field operations teams, and energy management
-    applications to manage power outages, monitor energy usage, handle billing,
-    and process service requests across the Tampa Bay service territory.
+  label: Tampa Electric Utility Operations
+  description: Unified utility operations capability for Tampa Electric (TECO Energy), combining outage management and account
+    services into a single workflow. Enables customer service agents, field operations teams, and energy management applications
+    to manage power outages, monitor energy usage, handle billing, and process service requests across the Tampa Bay service
+    territory.
   tags:
-    - TECO Energy
-    - Tampa Electric
-    - Utility Operations
-    - Outage Management
-    - Energy Usage
-    - Billing
-    - Customer Service
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - TECO Energy
+  - Tampa Electric
+  - Utility Operations
+  - Outage Management
+  - Energy Usage
+  - Billing
+  - Customer Service
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      TECO_API_TOKEN: TECO_API_TOKEN
-
+- namespace: env
+  keys:
+    TECO_API_TOKEN: TECO_API_TOKEN
 capability:
   consumes:
-    - import: teco-outage
-      location: ./shared/outage-api.yaml
-    - import: teco-account
-      location: ./shared/account-api.yaml
-
+  - type: http
+    namespace: teco-outage
+    baseUri: https://api.tecoenergy.com/v1
+    description: Tampa Electric Outage API for reporting and tracking power outages.
+    authentication:
+      type: bearer
+      token: '{{TECO_API_TOKEN}}'
+    resources:
+    - name: outages
+      path: /outages
+      description: Active power outages in the Tampa Electric service territory.
+      operations:
+      - name: list-outages
+        method: GET
+        description: List active outages, filtered by county or ZIP code.
+        inputParameters:
+        - name: county
+          in: query
+          type: string
+          required: false
+          description: Filter outages by Florida county name.
+        - name: zipCode
+          in: query
+          type: string
+          required: false
+          description: Filter outages by ZIP code.
+        - name: status
+          in: query
+          type: string
+          required: false
+          description: Filter by outage status (active, restored, assessing).
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-outage
+        method: GET
+        description: Get details for a specific outage event.
+        inputParameters:
+        - name: outageId
+          in: path
+          type: string
+          required: true
+          description: Unique outage event identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: report-outage
+        method: POST
+        description: Submit a power outage report for a service address.
+        body:
+          type: json
+          data:
+            accountNumber: '{{tools.accountNumber}}'
+            serviceAddress: '{{tools.serviceAddress}}'
+            hazardObserved: '{{tools.hazardObserved}}'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: get-outage-map
+        method: GET
+        description: Retrieve geographic outage map data.
+        inputParameters:
+        - name: bounds
+          in: query
+          type: string
+          required: false
+          description: Geographic bounding box.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+  - type: http
+    namespace: teco-account
+    baseUri: https://api.tecoenergy.com/v1
+    description: Tampa Electric Account API for customer account management.
+    authentication:
+      type: bearer
+      token: '{{TECO_API_TOKEN}}'
+    resources:
+    - name: accounts
+      path: /accounts
+      description: Tampa Electric customer accounts.
+      operations:
+      - name: get-account
+        method: GET
+        description: Get customer account details.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: usage
+      path: /accounts/{accountNumber}/usage
+      description: Energy usage history for a customer account.
+      operations:
+      - name: get-usage-history
+        method: GET
+        description: Get energy usage history by date range and interval.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        - name: startDate
+          in: query
+          type: string
+          required: false
+          description: Start date for usage history (YYYY-MM-DD).
+        - name: endDate
+          in: query
+          type: string
+          required: false
+          description: End date for usage history (YYYY-MM-DD).
+        - name: interval
+          in: query
+          type: string
+          required: false
+          description: 'Data interval: hourly, daily, or monthly.'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: bills
+      path: /accounts/{accountNumber}/bills
+      description: Billing history for a customer account.
+      operations:
+      - name: list-bills
+        method: GET
+        description: List billing history for a customer account.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: Maximum number of bills to return.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: array
+          value: $.
+      - name: get-bill
+        method: GET
+        description: Get detailed information for a specific bill.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        - name: billId
+          in: path
+          type: string
+          required: true
+          description: Unique bill identifier.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: make-payment
+        method: POST
+        description: Submit a payment for a customer account.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        body:
+          type: json
+          data:
+            amount: '{{tools.amount}}'
+            paymentMethod: '{{tools.paymentMethod}}'
+            paymentDate: '{{tools.paymentDate}}'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: service-requests
+      path: /accounts/{accountNumber}/service-requests
+      description: Service requests for a customer account.
+      operations:
+      - name: list-service-requests
+        method: GET
+        description: List service requests for a customer account.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        - name: status
+          in: query
+          type: string
+          required: false
+          description: Filter by service request status.
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: array
+          value: $.
+      - name: create-service-request
+        method: POST
+        description: Submit a new service request.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          required: true
+          description: Customer account number.
+        body:
+          type: json
+          data:
+            type: '{{tools.type}}'
+            preferredDate: '{{tools.preferredDate}}'
+            notes: '{{tools.notes}}'
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: teco-utility-api
-      description: "Unified REST API for Tampa Electric utility operations."
-      resources:
-        - path: /v1/outages
-          name: outages
-          description: "Active power outages in the Tampa Electric service territory."
-          operations:
-            - method: GET
-              name: list-outages
-              description: "List active Tampa Electric outages filtered by county or ZIP."
-              call: "teco-outage.list-outages"
-              with:
-                county: "rest.county"
-                zipCode: "rest.zipCode"
-                status: "rest.status"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/outages/{outageId}
-          name: outage
-          description: "A specific Tampa Electric outage event."
-          operations:
-            - method: GET
-              name: get-outage
-              description: "Get details for a specific Tampa Electric outage."
-              call: "teco-outage.get-outage"
-              with:
-                outageId: "rest.outageId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/accounts/{accountNumber}
-          name: account
-          description: "Tampa Electric customer account."
-          operations:
-            - method: GET
-              name: get-account
-              description: "Get customer account details and current balance."
-              call: "teco-account.get-account"
-              with:
-                accountNumber: "rest.accountNumber"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/accounts/{accountNumber}/usage
-          name: usage
-          description: "Energy usage history for a customer account."
-          operations:
-            - method: GET
-              name: get-usage-history
-              description: "Get energy usage history with date range and interval filtering."
-              call: "teco-account.get-usage-history"
-              with:
-                accountNumber: "rest.accountNumber"
-                startDate: "rest.startDate"
-                endDate: "rest.endDate"
-                interval: "rest.interval"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/accounts/{accountNumber}/bills
-          name: bills
-          description: "Billing history for a customer account."
-          operations:
-            - method: GET
-              name: list-bills
-              description: "List billing history for a customer account."
-              call: "teco-account.list-bills"
-              with:
-                accountNumber: "rest.accountNumber"
-                limit: "rest.limit"
-              outputParameters:
-                - type: array
-                  mapping: "$."
-
-        - path: /v1/accounts/{accountNumber}/service-requests
-          name: service-requests
-          description: "Service requests for a customer account."
-          operations:
-            - method: GET
-              name: list-service-requests
-              description: "List service requests for a customer account."
-              call: "teco-account.list-service-requests"
-              with:
-                accountNumber: "rest.accountNumber"
-              outputParameters:
-                - type: array
-                  mapping: "$."
-            - method: POST
-              name: create-service-request
-              description: "Submit a new service request."
-              call: "teco-account.create-service-request"
-              with:
-                accountNumber: "rest.accountNumber"
-                type: "rest.type"
-                preferredDate: "rest.preferredDate"
-                notes: "rest.notes"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: teco-utility-mcp
-      transport: http
-      description: "MCP server for AI-assisted Tampa Electric utility operations."
-      tools:
-        - name: list-outages
-          description: "List active Tampa Electric power outages. Filter by county or ZIP code."
-          hints:
-            readOnly: true
-            openWorld: true
-          call: "teco-outage.list-outages"
-          with:
-            county: "tools.county"
-            zipCode: "tools.zipCode"
-            status: "tools.status"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-outage
-          description: "Get detailed status and restoration time for a Tampa Electric outage."
-          hints:
-            readOnly: true
-          call: "teco-outage.get-outage"
-          with:
-            outageId: "tools.outageId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: report-outage
-          description: "Report a power outage at a Tampa Electric service address."
-          hints:
-            readOnly: false
-            destructive: false
-          call: "teco-outage.report-outage"
-          with:
-            accountNumber: "tools.accountNumber"
-            serviceAddress: "tools.serviceAddress"
-            hazardObserved: "tools.hazardObserved"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-outage-map
-          description: "Get geographic outage map data for Tampa Electric service territory."
-          hints:
-            readOnly: true
-          call: "teco-outage.get-outage-map"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-account
-          description: "Get Tampa Electric customer account details including balance and service info."
-          hints:
-            readOnly: true
-          call: "teco-account.get-account"
-          with:
-            accountNumber: "tools.accountNumber"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: get-usage-history
-          description: "Get historical energy consumption data for a Tampa Electric account."
-          hints:
-            readOnly: true
-          call: "teco-account.get-usage-history"
-          with:
-            accountNumber: "tools.accountNumber"
-            startDate: "tools.startDate"
-            endDate: "tools.endDate"
-            interval: "tools.interval"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-bills
-          description: "List billing history for a Tampa Electric customer account."
-          hints:
-            readOnly: true
-          call: "teco-account.list-bills"
-          with:
-            accountNumber: "tools.accountNumber"
-            limit: "tools.limit"
-          outputParameters:
-            - type: array
-              mapping: "$."
-
-        - name: list-service-requests
-          description: "List open and historical service requests for a Tampa Electric account."
-          hints:
-            readOnly: true
-          call: "teco-account.list-service-requests"
-          with:
-            accountNumber: "tools.accountNumber"
-            status: "tools.status"
-          outputParameters:
-            - type: array
-              mapping: "$."
-
-        - name: create-service-request
-          description: "Submit a new service request (start service, stop service, meter read, etc.) for a Tampa Electric account."
-          hints:
-            readOnly: false
-            destructive: false
-          call: "teco-account.create-service-request"
-          with:
-            accountNumber: "tools.accountNumber"
-            type: "tools.type"
-            preferredDate: "tools.preferredDate"
-            notes: "tools.notes"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: teco-utility-api
+    description: Unified REST API for Tampa Electric utility operations.
+    resources:
+    - path: /v1/outages
+      name: outages
+      description: Active power outages in the Tampa Electric service territory.
+      operations:
+      - method: GET
+        name: list-outages
+        description: List active Tampa Electric outages filtered by county or ZIP.
+        call: teco-outage.list-outages
+        with:
+          county: rest.county
+          zipCode: rest.zipCode
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/outages/{outageId}
+      name: outage
+      description: A specific Tampa Electric outage event.
+      operations:
+      - method: GET
+        name: get-outage
+        description: Get details for a specific Tampa Electric outage.
+        call: teco-outage.get-outage
+        with:
+          outageId: rest.outageId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountNumber}
+      name: account
+      description: Tampa Electric customer account.
+      operations:
+      - method: GET
+        name: get-account
+        description: Get customer account details and current balance.
+        call: teco-account.get-account
+        with:
+          accountNumber: rest.accountNumber
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountNumber}/usage
+      name: usage
+      description: Energy usage history for a customer account.
+      operations:
+      - method: GET
+        name: get-usage-history
+        description: Get energy usage history with date range and interval filtering.
+        call: teco-account.get-usage-history
+        with:
+          accountNumber: rest.accountNumber
+          startDate: rest.startDate
+          endDate: rest.endDate
+          interval: rest.interval
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountNumber}/bills
+      name: bills
+      description: Billing history for a customer account.
+      operations:
+      - method: GET
+        name: list-bills
+        description: List billing history for a customer account.
+        call: teco-account.list-bills
+        with:
+          accountNumber: rest.accountNumber
+          limit: rest.limit
+        outputParameters:
+        - type: array
+          mapping: $.
+    - path: /v1/accounts/{accountNumber}/service-requests
+      name: service-requests
+      description: Service requests for a customer account.
+      operations:
+      - method: GET
+        name: list-service-requests
+        description: List service requests for a customer account.
+        call: teco-account.list-service-requests
+        with:
+          accountNumber: rest.accountNumber
+        outputParameters:
+        - type: array
+          mapping: $.
+      - method: POST
+        name: create-service-request
+        description: Submit a new service request.
+        call: teco-account.create-service-request
+        with:
+          accountNumber: rest.accountNumber
+          type: rest.type
+          preferredDate: rest.preferredDate
+          notes: rest.notes
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: teco-utility-mcp
+    transport: http
+    description: MCP server for AI-assisted Tampa Electric utility operations.
+    tools:
+    - name: list-outages
+      description: List active Tampa Electric power outages. Filter by county or ZIP code.
+      hints:
+        readOnly: true
+        openWorld: true
+      call: teco-outage.list-outages
+      with:
+        county: tools.county
+        zipCode: tools.zipCode
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-outage
+      description: Get detailed status and restoration time for a Tampa Electric outage.
+      hints:
+        readOnly: true
+      call: teco-outage.get-outage
+      with:
+        outageId: tools.outageId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: report-outage
+      description: Report a power outage at a Tampa Electric service address.
+      hints:
+        readOnly: false
+        destructive: false
+      call: teco-outage.report-outage
+      with:
+        accountNumber: tools.accountNumber
+        serviceAddress: tools.serviceAddress
+        hazardObserved: tools.hazardObserved
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-outage-map
+      description: Get geographic outage map data for Tampa Electric service territory.
+      hints:
+        readOnly: true
+      call: teco-outage.get-outage-map
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-account
+      description: Get Tampa Electric customer account details including balance and service info.
+      hints:
+        readOnly: true
+      call: teco-account.get-account
+      with:
+        accountNumber: tools.accountNumber
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-usage-history
+      description: Get historical energy consumption data for a Tampa Electric account.
+      hints:
+        readOnly: true
+      call: teco-account.get-usage-history
+      with:
+        accountNumber: tools.accountNumber
+        startDate: tools.startDate
+        endDate: tools.endDate
+        interval: tools.interval
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bills
+      description: List billing history for a Tampa Electric customer account.
+      hints:
+        readOnly: true
+      call: teco-account.list-bills
+      with:
+        accountNumber: tools.accountNumber
+        limit: tools.limit
+      outputParameters:
+      - type: array
+        mapping: $.
+    - name: list-service-requests
+      description: List open and historical service requests for a Tampa Electric account.
+      hints:
+        readOnly: true
+      call: teco-account.list-service-requests
+      with:
+        accountNumber: tools.accountNumber
+        status: tools.status
+      outputParameters:
+      - type: array
+        mapping: $.
+    - name: create-service-request
+      description: Submit a new service request (start service, stop service, meter read, etc.) for a Tampa Electric account.
+      hints:
+        readOnly: false
+        destructive: false
+      call: teco-account.create-service-request
+      with:
+        accountNumber: tools.accountNumber
+        type: tools.type
+        preferredDate: tools.preferredDate
+        notes: tools.notes
+      outputParameters:
+      - type: object
+        mapping: $.
