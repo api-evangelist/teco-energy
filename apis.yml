@@ -109,7 +109,7 @@ common:
     description: Customer account management portal for billing and usage.
   - url: https://account.tecoenergy.com/Outage/Outagemap
     name: Tampa Electric Outage Map
-    type: Status
+    type: StatusPage
     description: Real-time outage map for Tampa Electric service territory.
   - url: https://www.linkedin.com/company/teco-energy
     name: TECO Energy on LinkedIn
