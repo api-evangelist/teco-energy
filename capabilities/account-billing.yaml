@@ -1,0 +1,184 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Tampa Electric Account API — Billing
+  description: 'Tampa Electric Account API — Billing. 3 operations. Lead operation: List Bills. Self-contained Naftiko capability
+    covering one Teco Energy business surface.'
+  tags:
+  - Teco Energy
+  - Billing
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TECO_ENERGY_API_KEY: TECO_ENERGY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: account-billing
+    baseUri: https://api.tecoenergy.com/v1
+    description: Tampa Electric Account API — Billing business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts-accountNumber-bills
+      path: /accounts/{accountNumber}/bills
+      operations:
+      - name: listbills
+        method: GET
+        description: List Bills
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          description: Customer account number.
+          required: true
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of bills to return.
+    - name: accounts-accountNumber-bills-billId
+      path: /accounts/{accountNumber}/bills/{billId}
+      operations:
+      - name: getbill
+        method: GET
+        description: Get Bill Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          description: Customer account number.
+          required: true
+        - name: billId
+          in: path
+          type: string
+          description: Unique bill identifier.
+          required: true
+    - name: accounts-accountNumber-payments
+      path: /accounts/{accountNumber}/payments
+      operations:
+      - name: makepayment
+        method: POST
+        description: Make Payment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: accountNumber
+          in: path
+          type: string
+          description: Customer account number.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TECO_ENERGY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: account-billing-rest
+    port: 8080
+    description: REST adapter for Tampa Electric Account API — Billing. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts/{accountnumber}/bills
+      name: accounts-accountnumber-bills
+      description: REST surface for accounts-accountNumber-bills.
+      operations:
+      - method: GET
+        name: listbills
+        description: List Bills
+        call: account-billing.listbills
+        with:
+          accountNumber: rest.accountNumber
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountnumber}/bills/{billid}
+      name: accounts-accountnumber-bills-billid
+      description: REST surface for accounts-accountNumber-bills-billId.
+      operations:
+      - method: GET
+        name: getbill
+        description: Get Bill Details
+        call: account-billing.getbill
+        with:
+          accountNumber: rest.accountNumber
+          billId: rest.billId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountnumber}/payments
+      name: accounts-accountnumber-payments
+      description: REST surface for accounts-accountNumber-payments.
+      operations:
+      - method: POST
+        name: makepayment
+        description: Make Payment
+        call: account-billing.makepayment
+        with:
+          accountNumber: rest.accountNumber
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: account-billing-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Tampa Electric Account API — Billing. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-bills
+      description: List Bills
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: account-billing.listbills
+      with:
+        accountNumber: tools.accountNumber
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-bill-details
+      description: Get Bill Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: account-billing.getbill
+      with:
+        accountNumber: tools.accountNumber
+        billId: tools.billId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: make-payment
+      description: Make Payment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: account-billing.makepayment
+      with:
+        accountNumber: tools.accountNumber
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

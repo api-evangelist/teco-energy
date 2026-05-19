@@ -1,0 +1,228 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Tampa Electric Outage API — Outages
+  description: 'Tampa Electric Outage API — Outages. 4 operations. Lead operation: List Active Outages. Self-contained Naftiko
+    capability covering one Teco Energy business surface.'
+  tags:
+  - Teco Energy
+  - Outages
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TECO_ENERGY_API_KEY: TECO_ENERGY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: outage-outages
+    baseUri: https://api.tecoenergy.com/v1
+    description: Tampa Electric Outage API — Outages business capability. Self-contained, no shared references.
+    resources:
+    - name: outages
+      path: /outages
+      operations:
+      - name: listoutages
+        method: GET
+        description: List Active Outages
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: county
+          in: query
+          type: string
+          description: Filter outages by Florida county name.
+        - name: zipCode
+          in: query
+          type: string
+          description: Filter outages by ZIP code.
+        - name: status
+          in: query
+          type: string
+          description: Filter by outage status.
+        - name: page
+          in: query
+          type: integer
+          description: Page number for pagination.
+        - name: pageSize
+          in: query
+          type: integer
+          description: Number of results per page.
+    - name: outages-map
+      path: /outages/map
+      operations:
+      - name: getoutagemap
+        method: GET
+        description: Get Outage Map Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: bounds
+          in: query
+          type: string
+          description: Geographic bounding box (minLat,minLng,maxLat,maxLng).
+    - name: outages-report
+      path: /outages/report
+      operations:
+      - name: reportoutage
+        method: POST
+        description: Report Power Outage
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: outages-outageId
+      path: /outages/{outageId}
+      operations:
+      - name: getoutage
+        method: GET
+        description: Get Outage Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: outageId
+          in: path
+          type: string
+          description: Unique identifier for the outage event.
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TECO_ENERGY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: outage-outages-rest
+    port: 8080
+    description: REST adapter for Tampa Electric Outage API — Outages. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/outages
+      name: outages
+      description: REST surface for outages.
+      operations:
+      - method: GET
+        name: listoutages
+        description: List Active Outages
+        call: outage-outages.listoutages
+        with:
+          county: rest.county
+          zipCode: rest.zipCode
+          status: rest.status
+          page: rest.page
+          pageSize: rest.pageSize
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/outages/map
+      name: outages-map
+      description: REST surface for outages-map.
+      operations:
+      - method: GET
+        name: getoutagemap
+        description: Get Outage Map Data
+        call: outage-outages.getoutagemap
+        with:
+          bounds: rest.bounds
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/outages/report
+      name: outages-report
+      description: REST surface for outages-report.
+      operations:
+      - method: POST
+        name: reportoutage
+        description: Report Power Outage
+        call: outage-outages.reportoutage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/outages/{outageid}
+      name: outages-outageid
+      description: REST surface for outages-outageId.
+      operations:
+      - method: GET
+        name: getoutage
+        description: Get Outage Details
+        call: outage-outages.getoutage
+        with:
+          outageId: rest.outageId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: outage-outages-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Tampa Electric Outage API — Outages. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-active-outages
+      description: List Active Outages
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: outage-outages.listoutages
+      with:
+        county: tools.county
+        zipCode: tools.zipCode
+        status: tools.status
+        page: tools.page
+        pageSize: tools.pageSize
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-outage-map-data
+      description: Get Outage Map Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: outage-outages.getoutagemap
+      with:
+        bounds: tools.bounds
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: report-power-outage
+      description: Report Power Outage
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: outage-outages.reportoutage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-outage-details
+      description: Get Outage Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: outage-outages.getoutage
+      with:
+        outageId: tools.outageId
+      outputParameters:
+      - type: object
+        mapping: $.
