@@ -1,134 +1,107 @@
 # TECO Energy (teco-energy)
 
-TECO Energy is an energy holding company and subsidiary of Emera Inc., operating Tampa Electric (electric utility serving west central Florida) and Peoples Gas (natural gas utility serving Florida). Tampa Electric serves approximately 800,000 customers across the Tampa Bay area. TECO Energy provides a developer portal powered by Azure API Management at developer.tecoenergy.com, exposing APIs for outage management, account services, energy usage, billing, and grid operations.
+TECO Energy is an energy holding company and subsidiary of Emera Inc., operating Tampa Electric (electric utility serving west central Florida) and Peoples Gas (natural gas utility serving Florida). TECO Energy provides a developer portal powered by Azure API Management at developer.tecoenergy.com, exposing APIs for outage management, account services, energy usage, billing, and grid operations. Tampa Electric serves approximately 800,000 customers across the Tampa Bay area and parts of central Florida.
 
-**URL:** [https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml)
 
 ## Scope
 
 - **Type:** Index
-- **Fortune:** Fortune 1000
 
-## Tags:
+## Tags
 
- - Energy, Utilities, Electric, Natural Gas, Smart Grid, Tampa Bay
+- Energy
+- Utilities
+- Electric
+- Natural Gas
+- Smart Grid
+- Tampa Bay
 
 ## Timestamps
 
 - **Created:** 2026-03-24
-- **Modified:** 2026-05-03
+- **Modified:** 2026-05-19
 
 ## APIs
 
 ### Tampa Electric API Management
 
-Tampa Electric provides a developer portal powered by Azure API Management at developer.tecoenergy.com.
+Tampa Electric provides a developer portal powered by Azure API Management at developer.tecoenergy.com. The portal enables developers to discover APIs, review documentation, try APIs interactively, and sign up for API keys. APIs likely include outage management, account services, energy usage data, billing, and grid operations. Authentication is required to access the full API catalog.
 
-**Human URL:** [https://developer.tecoenergy.com/](https://developer.tecoenergy.com/)
+- **Human URL:** [https://developer.tecoenergy.com/](https://developer.tecoenergy.com/)
+- **Base URL:** `https://developer.tecoenergy.com`
+
+#### Tags
+
+- Electric Utility
+- Energy
+- API Management
+- Azure
+- Tampa Electric
 
 #### Properties
 
 - [Documentation](https://developer.tecoenergy.com/)
-- [DeveloperPortal](https://developer.tecoenergy.com/)
+- [Developer Portal](https://developer.tecoenergy.com/)
+- [Postman Collection](collections/teco-energy-account.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/teco-energy-account.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Postman Collection](collections/teco-energy-outage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/teco-energy-outage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ### Tampa Electric Outage API
 
-Power outage reporting, tracking, and map data for the Tampa Electric service territory.
+Tampa Electric exposes outage reporting and outage map data through its customer portal and API infrastructure. The outage map at account.tecoenergy.com/Outage/Outagemap enables customers to report and track power outages, serving as the foundation for utility outage management APIs covering outage creation, status, restoration times, and affected customer counts.
 
-**Human URL:** [https://account.tecoenergy.com/Outage/Outagemap](https://account.tecoenergy.com/Outage/Outagemap)
+- **Human URL:** [https://account.tecoenergy.com/Outage/Outagemap](https://account.tecoenergy.com/Outage/Outagemap)
+- **Base URL:** `https://account.tecoenergy.com`
 
-#### Tags:
+#### Tags
 
- - Electric Utility, Grid Operations, Outage, Reliability
+- Outage
+- Electric Utility
+- Grid Operations
+- Reliability
 
 #### Properties
 
 - [Documentation](https://account.tecoenergy.com/Outage/Outagemap)
-- [OpenAPI](openapi/teco-energy-outage-openapi.yml)
-- [JSONSchema](json-schema/teco-energy-outage-schema.json)
+- [OpenAPI](openapi/teco-energy-outage-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/teco-energy-outage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/teco-energy-outage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [JSON Schema](json-schema/teco-energy-outage-schema.json) — [JSON Schema](https://json-schema.org/specification)
 
 ### Tampa Electric Account API
 
-Customer account management including billing, energy usage, payments, and service requests.
+Tampa Electric provides customer account management services including bill payment, usage history, paperless billing enrollment, service transfers, and energy audit tools. These customer-facing services are backed by account APIs enabling programmatic access to billing data, account status, payment history, and energy efficiency recommendations for residential and commercial customers.
 
-**Human URL:** [https://account.tecoenergy.com/](https://account.tecoenergy.com/)
+- **Human URL:** [https://account.tecoenergy.com/](https://account.tecoenergy.com/)
+- **Base URL:** `https://account.tecoenergy.com`
 
-#### Tags:
+#### Tags
 
- - Account Management, Billing, Customer Service, Energy Usage
+- Account Management
+- Billing
+- Energy Usage
+- Customer Service
 
 #### Properties
 
 - [Documentation](https://account.tecoenergy.com/)
-- [OpenAPI](openapi/teco-energy-account-openapi.yml)
-- [JSONSchema](json-schema/teco-energy-account-schema.json)
-
-## Artifacts
-
-### OpenAPI Specifications
-
-| File | Description |
-|---|---|
-| [teco-energy-outage-openapi.yml](openapi/teco-energy-outage-openapi.yml) | Outage management API - list, report, and track power outages |
-| [teco-energy-account-openapi.yml](openapi/teco-energy-account-openapi.yml) | Account API - billing, usage, payments, service requests |
-
-### JSON Schemas
-
-| File | Description |
-|---|---|
-| [teco-energy-outage-schema.json](json-schema/teco-energy-outage-schema.json) | Schema for Tampa Electric outage event objects |
-| [teco-energy-account-schema.json](json-schema/teco-energy-account-schema.json) | Schema for Tampa Electric customer account objects |
-
-### JSON Structure
-
-| File | Description |
-|---|---|
-| [teco-energy-outage-structure.json](json-structure/teco-energy-outage-structure.json) | Field-level documentation for outage objects |
-
-### JSON-LD Context
-
-| File | Description |
-|---|---|
-| [teco-energy-context.jsonld](json-ld/teco-energy-context.jsonld) | Linked data context mapping TECO Energy terms to schema.org |
-
-### Examples
-
-| File | Description |
-|---|---|
-| [teco-energy-list-outages-example.json](examples/teco-energy-list-outages-example.json) | Example request/response for listing outages |
-| [teco-energy-get-usage-example.json](examples/teco-energy-get-usage-example.json) | Example request/response for energy usage history |
-
-### Spectral Rules
-
-| File | Description |
-|---|---|
-| [teco-energy-rules.yml](rules/teco-energy-rules.yml) | Spectral ruleset for Tampa Electric API conventions |
-
-### Naftiko Capabilities
-
-| File | Description |
-|---|---|
-| [capabilities/utility-operations.yaml](capabilities/utility-operations.yaml) | Utility operations workflow - outage + account management (9 MCP tools) |
-| [capabilities/shared/outage-api.yaml](capabilities/shared/outage-api.yaml) | Shared Tampa Electric Outage API consumed definition |
-| [capabilities/shared/account-api.yaml](capabilities/shared/account-api.yaml) | Shared Tampa Electric Account API consumed definition |
-
-### Vocabulary
-
-| File | Description |
-|---|---|
-| [teco-energy-vocabulary.yml](vocabulary/teco-energy-vocabulary.yml) | Domain vocabulary for Tampa Electric utility operations |
+- [OpenAPI](openapi/teco-energy-account-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/teco-energy-account.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/teco-energy-account.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [JSON Schema](json-schema/teco-energy-account-schema.json) — [JSON Schema](https://json-schema.org/specification)
 
 ## Common Properties
 
 - [Website](https://www.tecoenergy.com)
-- [DeveloperPortal](https://developer.tecoenergy.com/)
-- [Tampa Electric Website](https://www.tampaelectric.com/)
-- [Account Portal](https://account.tecoenergy.com/)
-- [Outage Map](https://account.tecoenergy.com/Outage/Outagemap)
+- [Developer Portal](https://developer.tecoenergy.com/)
+- [Website](https://www.tampaelectric.com/)
+- [Portal](https://account.tecoenergy.com/)
+- [Status Page](https://account.tecoenergy.com/Outage/Outagemap)
 - [LinkedIn](https://www.linkedin.com/company/teco-energy)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com

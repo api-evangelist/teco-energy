@@ -1,0 +1,731 @@
+{
+  "item": [
+    {
+      "id": "0f21e7d6-9bd5-40bd-933f-e7904a9143bf",
+      "name": "Outages",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e2f62dfb-eaa8-451e-aebf-f5c33ffeed4b",
+          "name": "List Active Outages",
+          "request": {
+            "name": "List Active Outages",
+            "description": {
+              "content": "Retrieve a list of current active outages within the Tampa Electric service territory.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "outages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "county",
+                  "value": "<string>",
+                  "description": "Filter outages by Florida county name."
+                },
+                {
+                  "disabled": false,
+                  "key": "zipCode",
+                  "value": "<string>",
+                  "description": "Filter outages by ZIP code."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter by outage status."
+                },
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number for pagination."
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "25",
+                  "description": "Number of results per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1678257b-af82-4a79-b016-8c6913c0d576",
+              "name": "A list of active outages.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "county",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zipCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"totalOutages\": 9896,\n  \"customersAffected\": 4903,\n  \"outages\": [\n    {\n      \"outageId\": \"string\",\n      \"status\": \"restored\",\n      \"cause\": \"equipment\",\n      \"customersAffected\": 2094,\n      \"affectedArea\": {\n        \"zipCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"county\": \"string\",\n        \"city\": \"string\"\n      },\n      \"outageStartTime\": \"2010-11-03T00:50:05.917Z\",\n      \"estimatedRestorationTime\": \"1971-02-06T21:00:45.322Z\",\n      \"actualRestorationTime\": \"1996-01-16T06:28:38.247Z\",\n      \"lastUpdated\": \"1966-07-05T09:45:39.069Z\"\n    },\n    {\n      \"outageId\": \"string\",\n      \"status\": \"restored\",\n      \"cause\": \"vegetation\",\n      \"customersAffected\": 5086,\n      \"affectedArea\": {\n        \"zipCodes\": [\n          \"string\",\n          \"string\"\n        ],\n        \"county\": \"string\",\n        \"city\": \"string\"\n      },\n      \"outageStartTime\": \"1995-05-25T10:55:10.937Z\",\n      \"estimatedRestorationTime\": \"1997-10-05T00:31:29.300Z\",\n      \"actualRestorationTime\": \"1950-10-22T07:13:34.211Z\",\n      \"lastUpdated\": \"1960-11-23T02:51:04.901Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "49a2afb8-a351-444d-a5fd-a4ce12a558ce",
+              "name": "Unauthorized - invalid or missing token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "county",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zipCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "369f4498-3d79-4ba2-888c-79684bafc75b",
+              "name": "Too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "county",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "zipCode",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page",
+                      "value": "1"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "25"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ced7938-ab47-412f-98f5-52004341788e",
+          "name": "Get Outage Details",
+          "request": {
+            "name": "Get Outage Details",
+            "description": {
+              "content": "Retrieve detailed information about a specific outage by its ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "outages",
+                ":outageId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "outageId",
+                  "description": "(Required) Unique identifier for the outage event."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f5f6c079-e8dd-41e1-8ce0-f3e0984b7840",
+              "name": "Detailed outage information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages",
+                    ":outageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "outageId",
+                      "description": "(Required) Unique identifier for the outage event."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"outageId\": \"string\",\n  \"status\": \"assessing\",\n  \"cause\": \"equipment\",\n  \"customersAffected\": 2660,\n  \"affectedArea\": {\n    \"zipCodes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"county\": \"string\",\n    \"city\": \"string\"\n  },\n  \"outageStartTime\": \"2019-08-22T12:16:00.381Z\",\n  \"estimatedRestorationTime\": \"1949-02-01T05:09:23.986Z\",\n  \"actualRestorationTime\": \"1956-07-04T05:36:15.154Z\",\n  \"lastUpdated\": \"1950-10-07T15:10:01.284Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a57a71db-8449-4456-94fb-ce666bcfff1f",
+              "name": "Outage not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages",
+                    ":outageId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "outageId",
+                      "description": "(Required) Unique identifier for the outage event."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "51284015-514a-4e92-87ab-5926ef044028",
+          "name": "Report Power Outage",
+          "request": {
+            "name": "Report Power Outage",
+            "description": {
+              "content": "Submit a power outage report for a specific service address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "outages",
+                "report"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"serviceAddress\": {\n    \"streetAddress\": \"<string>\",\n    \"zipCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"FL\"\n  },\n  \"accountNumber\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"hazardObserved\": \"<boolean>\",\n  \"hazardDescription\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "62c111c6-61bb-4ec8-9d4d-084504b03d3e",
+              "name": "Outage report submitted successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAddress\": {\n    \"streetAddress\": \"<string>\",\n    \"zipCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"FL\"\n  },\n  \"accountNumber\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"hazardObserved\": \"<boolean>\",\n  \"hazardDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"confirmationNumber\": \"string\",\n  \"message\": \"string\",\n  \"estimatedRestorationTime\": \"1956-01-05T23:42:24.441Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4bcdcb84-d0bd-4e9c-b58a-b24b8ce9d166",
+              "name": "Invalid request data.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAddress\": {\n    \"streetAddress\": \"<string>\",\n    \"zipCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"FL\"\n  },\n  \"accountNumber\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"hazardObserved\": \"<boolean>\",\n  \"hazardDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d45d52e9-c5fb-4c28-8b8d-454be9a107f9",
+              "name": "Unauthorized.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages",
+                    "report"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"serviceAddress\": {\n    \"streetAddress\": \"<string>\",\n    \"zipCode\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"FL\"\n  },\n  \"accountNumber\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"hazardObserved\": \"<boolean>\",\n  \"hazardDescription\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9af6ab6d-f1c5-4095-bea4-6d6963bd0628",
+          "name": "Get Outage Map Data",
+          "request": {
+            "name": "Get Outage Map Data",
+            "description": {
+              "content": "Retrieve geographic outage data suitable for rendering on a map.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "outages",
+                "map"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "bounds",
+                  "value": "<string>",
+                  "description": "Geographic bounding box (minLat,minLng,maxLat,maxLng)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "eee3457c-35df-4fe2-baac-73e185f90f76",
+              "name": "Outage map data with geographic coordinates.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "outages",
+                    "map"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "bounds",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"outageAreas\": [\n    {\n      \"latitude\": 8999.595843443354,\n      \"longitude\": 7882.784780275634,\n      \"radius\": 6025.592315293267,\n      \"customersAffected\": 6962,\n      \"status\": \"string\"\n    },\n    {\n      \"latitude\": 3185.50464959332,\n      \"longitude\": 1112.5026789543601,\n      \"radius\": 3028.4288109852264,\n      \"customersAffected\": 967,\n      \"status\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.tecoenergy.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "1d44f6dd-f109-488a-8c04-5fe7eefd2541",
+    "name": "Tampa Electric Outage API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Tampa Electric Outage API provides programmatic access to power outage reporting, outage status tracking, and restoration information for the Tampa Electric service territory in west central Florida. Enables customers and partners to report outages, retrieve outage status, and access restoration estimated times for affected service addresses.",
+      "type": "text/plain"
+    }
+  }
+}
