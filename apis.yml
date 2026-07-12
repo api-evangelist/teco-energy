@@ -84,6 +84,10 @@ apis:
       - type: JSONSchema
         url: json-schema/teco-energy-account-schema.json
 common:
+  - type: DomainSecurity
+    url: security/teco-energy-domain-security.yml
+  - type: Authentication
+    url: authentication/teco-energy-authentication.yml
   - url: https://www.tecoenergy.com
     name: TECO Energy
     type: Website
