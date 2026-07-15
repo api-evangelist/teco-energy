@@ -84,6 +84,8 @@ apis:
       - type: JSONSchema
         url: json-schema/teco-energy-account-schema.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/teco-energy-agentic-access.yml
   - type: DomainSecurity
     url: security/teco-energy-domain-security.yml
   - type: Authentication
