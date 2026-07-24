@@ -1,0 +1,146 @@
+openapi: 3.0.3
+info:
+  title: Tampa Electric Account Accounts Service Requests API
+  description: The Tampa Electric Account API provides programmatic access to customer account management capabilities including billing, energy usage history, payment processing, service requests, and energy efficiency programs. Used by residential and commercial customers and authorized third-party applications through the Tampa Electric developer portal.
+  version: 1.0.0
+  contact:
+    url: https://developer.tecoenergy.com/
+  license:
+    name: Proprietary
+    url: https://www.tecoenergy.com/
+servers:
+- url: https://api.tecoenergy.com/v1
+  description: Tampa Electric API - Production
+tags:
+- name: Service Requests
+paths:
+  /accounts/{accountNumber}/service-requests:
+    get:
+      operationId: listServiceRequests
+      summary: List Service Requests
+      description: Retrieve open and historical service requests for a customer account.
+      tags:
+      - Service Requests
+      parameters:
+      - name: accountNumber
+        in: path
+        description: Customer account number.
+        required: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by service request status.
+        required: false
+        schema:
+          type: string
+          enum:
+          - open
+          - in-progress
+          - completed
+          - cancelled
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: List of service requests.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ServiceRequest'
+    post:
+      operationId: createServiceRequest
+      summary: Create Service Request
+      description: Submit a new service request for a customer account.
+      tags:
+      - Service Requests
+      parameters:
+      - name: accountNumber
+        in: path
+        description: Customer account number.
+        required: true
+        schema:
+          type: string
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServiceRequestCreate'
+      responses:
+        '201':
+          description: Service request created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceRequest'
+        '400':
+          description: Invalid request data.
+components:
+  schemas:
+    ServiceRequestCreate:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          type: string
+          enum:
+          - start-service
+          - stop-service
+          - transfer-service
+          - meter-read
+          - tree-trimming
+          - streetlight-repair
+          - general-inquiry
+        preferredDate:
+          type: string
+          format: date
+        notes:
+          type: string
+    ServiceRequest:
+      type: object
+      description: A service request for Tampa Electric customer operations.
+      properties:
+        requestId:
+          type: string
+          description: Unique service request ID.
+        type:
+          type: string
+          description: Type of service request.
+          enum:
+          - start-service
+          - stop-service
+          - transfer-service
+          - meter-read
+          - tree-trimming
+          - streetlight-repair
+          - general-inquiry
+        status:
+          type: string
+          enum:
+          - open
+          - in-progress
+          - completed
+          - cancelled
+        createdDate:
+          type: string
+          format: date-time
+        scheduledDate:
+          type: string
+          format: date
+        completedDate:
+          type: string
+          format: date
+        notes:
+          type: string
+          description: Additional notes or details about the request.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

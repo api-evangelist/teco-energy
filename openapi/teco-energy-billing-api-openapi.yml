@@ -1,0 +1,203 @@
+openapi: 3.0.3
+info:
+  title: Tampa Electric Account Accounts Billing API
+  description: The Tampa Electric Account API provides programmatic access to customer account management capabilities including billing, energy usage history, payment processing, service requests, and energy efficiency programs. Used by residential and commercial customers and authorized third-party applications through the Tampa Electric developer portal.
+  version: 1.0.0
+  contact:
+    url: https://developer.tecoenergy.com/
+  license:
+    name: Proprietary
+    url: https://www.tecoenergy.com/
+servers:
+- url: https://api.tecoenergy.com/v1
+  description: Tampa Electric API - Production
+tags:
+- name: Billing
+paths:
+  /accounts/{accountNumber}/bills:
+    get:
+      operationId: listBills
+      summary: List Bills
+      description: Retrieve billing history for a customer account.
+      tags:
+      - Billing
+      parameters:
+      - name: accountNumber
+        in: path
+        description: Customer account number.
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Maximum number of bills to return.
+        required: false
+        schema:
+          type: integer
+          default: 12
+          maximum: 24
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: List of bills.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Bill'
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Account not found.
+  /accounts/{accountNumber}/bills/{billId}:
+    get:
+      operationId: getBill
+      summary: Get Bill Details
+      description: Retrieve detailed information for a specific bill.
+      tags:
+      - Billing
+      parameters:
+      - name: accountNumber
+        in: path
+        description: Customer account number.
+        required: true
+        schema:
+          type: string
+      - name: billId
+        in: path
+        description: Unique bill identifier.
+        required: true
+        schema:
+          type: string
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Bill details.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bill'
+        '404':
+          description: Bill not found.
+  /accounts/{accountNumber}/payments:
+    post:
+      operationId: makePayment
+      summary: Make Payment
+      description: Submit a payment for a Tampa Electric customer account.
+      tags:
+      - Billing
+      parameters:
+      - name: accountNumber
+        in: path
+        description: Customer account number.
+        required: true
+        schema:
+          type: string
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+      responses:
+        '201':
+          description: Payment submitted successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  confirmationNumber:
+                    type: string
+                  paymentDate:
+                    type: string
+                    format: date
+                  amount:
+                    type: number
+                  status:
+                    type: string
+        '400':
+          description: Invalid payment data.
+        '401':
+          description: Unauthorized.
+components:
+  schemas:
+    PaymentRequest:
+      type: object
+      required:
+      - amount
+      - paymentMethod
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Payment amount in USD.
+        paymentMethod:
+          type: string
+          enum:
+          - bank-account
+          - credit-card
+          - debit-card
+        paymentDate:
+          type: string
+          format: date
+          description: Date to process the payment. Defaults to today.
+    Bill:
+      type: object
+      description: A Tampa Electric utility bill.
+      properties:
+        billId:
+          type: string
+          description: Unique bill identifier.
+        billDate:
+          type: string
+          format: date
+          description: Date the bill was issued.
+        dueDate:
+          type: string
+          format: date
+          description: Payment due date.
+        billingPeriodStart:
+          type: string
+          format: date
+          description: Start of the billing period.
+        billingPeriodEnd:
+          type: string
+          format: date
+          description: End of the billing period.
+        totalAmount:
+          type: number
+          format: double
+          description: Total amount due in USD.
+        kwhUsed:
+          type: number
+          format: double
+          description: Total kilowatt-hours consumed during the billing period.
+        status:
+          type: string
+          enum:
+          - unpaid
+          - paid
+          - overdue
+          - partial
+        charges:
+          type: array
+          description: Itemized charges on the bill.
+          items:
+            type: object
+            properties:
+              description:
+                type: string
+              amount:
+                type: number
+                format: double
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

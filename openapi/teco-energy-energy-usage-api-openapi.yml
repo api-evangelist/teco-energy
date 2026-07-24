@@ -1,0 +1,111 @@
+openapi: 3.0.3
+info:
+  title: Tampa Electric Account Accounts Energy Usage API
+  description: The Tampa Electric Account API provides programmatic access to customer account management capabilities including billing, energy usage history, payment processing, service requests, and energy efficiency programs. Used by residential and commercial customers and authorized third-party applications through the Tampa Electric developer portal.
+  version: 1.0.0
+  contact:
+    url: https://developer.tecoenergy.com/
+  license:
+    name: Proprietary
+    url: https://www.tecoenergy.com/
+servers:
+- url: https://api.tecoenergy.com/v1
+  description: Tampa Electric API - Production
+tags:
+- name: Energy Usage
+paths:
+  /accounts/{accountNumber}/usage:
+    get:
+      operationId: getUsageHistory
+      summary: Get Energy Usage History
+      description: Retrieve historical energy usage data for a customer account.
+      tags:
+      - Energy Usage
+      parameters:
+      - name: accountNumber
+        in: path
+        description: Customer account number.
+        required: true
+        schema:
+          type: string
+      - name: startDate
+        in: query
+        description: Start date for usage history (ISO 8601 format).
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: endDate
+        in: query
+        description: End date for usage history (ISO 8601 format).
+        required: false
+        schema:
+          type: string
+          format: date
+      - name: interval
+        in: query
+        description: Data interval granularity.
+        required: false
+        schema:
+          type: string
+          enum:
+          - hourly
+          - daily
+          - monthly
+          default: daily
+      security:
+      - bearerAuth: []
+      responses:
+        '200':
+          description: Energy usage history.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accountNumber:
+                    type: string
+                  unit:
+                    type: string
+                    description: Unit of measurement (kWh).
+                  interval:
+                    type: string
+                  usageData:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UsageRecord'
+        '401':
+          description: Unauthorized.
+        '404':
+          description: Account not found.
+components:
+  schemas:
+    UsageRecord:
+      type: object
+      description: An energy usage record for a specific time interval.
+      properties:
+        startTime:
+          type: string
+          format: date-time
+          description: Start of the measurement interval.
+        endTime:
+          type: string
+          format: date-time
+          description: End of the measurement interval.
+        usage:
+          type: number
+          format: double
+          description: Energy consumed in kWh during the interval.
+        cost:
+          type: number
+          format: double
+          description: Estimated cost for the interval in USD.
+        temperature:
+          type: number
+          format: double
+          description: Average outdoor temperature during the interval (Fahrenheit).
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

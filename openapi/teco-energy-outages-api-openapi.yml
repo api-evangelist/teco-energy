@@ -1,12 +1,7 @@
 openapi: 3.0.3
 info:
-  title: Tampa Electric Outage API
-  description: >-
-    The Tampa Electric Outage API provides programmatic access to power outage
-    reporting, outage status tracking, and restoration information for the Tampa
-    Electric service territory in west central Florida. Enables customers and
-    partners to report outages, retrieve outage status, and access restoration
-    estimated times for affected service addresses.
+  title: Tampa Electric Account Accounts Outages API
+  description: The Tampa Electric Account API provides programmatic access to customer account management capabilities including billing, energy usage history, payment processing, service requests, and energy efficiency programs. Used by residential and commercial customers and authorized third-party applications through the Tampa Electric developer portal.
   version: 1.0.0
   contact:
     url: https://developer.tecoenergy.com/
@@ -14,8 +9,10 @@ info:
     name: Proprietary
     url: https://www.tecoenergy.com/
 servers:
-  - url: https://api.tecoenergy.com/v1
-    description: Tampa Electric API - Production
+- url: https://api.tecoenergy.com/v1
+  description: Tampa Electric API - Production
+tags:
+- name: Outages
 paths:
   /outages:
     get:
@@ -23,47 +20,47 @@ paths:
       summary: List Active Outages
       description: Retrieve a list of current active outages within the Tampa Electric service territory.
       tags:
-        - Outages
+      - Outages
       parameters:
-        - name: county
-          in: query
-          description: Filter outages by Florida county name.
-          required: false
-          schema:
-            type: string
-        - name: zipCode
-          in: query
-          description: Filter outages by ZIP code.
-          required: false
-          schema:
-            type: string
-        - name: status
-          in: query
-          description: Filter by outage status.
-          required: false
-          schema:
-            type: string
-            enum:
-              - active
-              - restored
-              - assessing
-        - name: page
-          in: query
-          description: Page number for pagination.
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - name: pageSize
-          in: query
-          description: Number of results per page.
-          required: false
-          schema:
-            type: integer
-            default: 25
-            maximum: 100
+      - name: county
+        in: query
+        description: Filter outages by Florida county name.
+        required: false
+        schema:
+          type: string
+      - name: zipCode
+        in: query
+        description: Filter outages by ZIP code.
+        required: false
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Filter by outage status.
+        required: false
+        schema:
+          type: string
+          enum:
+          - active
+          - restored
+          - assessing
+      - name: page
+        in: query
+        description: Page number for pagination.
+        required: false
+        schema:
+          type: integer
+          default: 1
+      - name: pageSize
+        in: query
+        description: Number of results per page.
+        required: false
+        schema:
+          type: integer
+          default: 25
+          maximum: 100
       security:
-        - bearerAuth: []
+      - bearerAuth: []
       responses:
         '200':
           description: A list of active outages.
@@ -92,16 +89,16 @@ paths:
       summary: Get Outage Details
       description: Retrieve detailed information about a specific outage by its ID.
       tags:
-        - Outages
+      - Outages
       parameters:
-        - name: outageId
-          in: path
-          description: Unique identifier for the outage event.
-          required: true
-          schema:
-            type: string
+      - name: outageId
+        in: path
+        description: Unique identifier for the outage event.
+        required: true
+        schema:
+          type: string
       security:
-        - bearerAuth: []
+      - bearerAuth: []
       responses:
         '200':
           description: Detailed outage information.
@@ -117,9 +114,9 @@ paths:
       summary: Report Power Outage
       description: Submit a power outage report for a specific service address.
       tags:
-        - Outages
+      - Outages
       security:
-        - bearerAuth: []
+      - bearerAuth: []
       requestBody:
         required: true
         content:
@@ -154,14 +151,14 @@ paths:
       summary: Get Outage Map Data
       description: Retrieve geographic outage data suitable for rendering on a map.
       tags:
-        - Outages
+      - Outages
       parameters:
-        - name: bounds
-          in: query
-          description: Geographic bounding box (minLat,minLng,maxLat,maxLng).
-          required: false
-          schema:
-            type: string
+      - name: bounds
+        in: query
+        description: Geographic bounding box (minLat,minLng,maxLat,maxLng).
+        required: false
+        schema:
+          type: string
       responses:
         '200':
           description: Outage map data with geographic coordinates.
@@ -189,12 +186,42 @@ paths:
                         status:
                           type: string
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   schemas:
+    OutageReport:
+      type: object
+      description: An outage report submitted by a customer.
+      required:
+      - serviceAddress
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: Customer account number.
+        serviceAddress:
+          type: object
+          description: Service address experiencing the outage.
+          required:
+          - streetAddress
+          - zipCode
+          properties:
+            streetAddress:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+              default: FL
+            zipCode:
+              type: string
+        contactPhone:
+          type: string
+          description: Customer contact phone number for follow-up.
+        hazardObserved:
+          type: boolean
+          description: Whether a hazardous condition (downed line, sparking) was observed.
+        hazardDescription:
+          type: string
+          description: Description of any observed hazard.
     Outage:
       type: object
       description: A power outage event in the Tampa Electric service territory.
@@ -206,19 +233,19 @@ components:
           type: string
           description: Current status of the outage.
           enum:
-            - active
-            - restored
-            - assessing
+          - active
+          - restored
+          - assessing
         cause:
           type: string
           description: Reported or assessed cause of the outage.
           enum:
-            - weather
-            - equipment
-            - animal
-            - vegetation
-            - vehicle
-            - unknown
+          - weather
+          - equipment
+          - animal
+          - vegetation
+          - vehicle
+          - unknown
         customersAffected:
           type: integer
           description: Number of customers currently affected.
@@ -250,38 +277,8 @@ components:
           type: string
           format: date-time
           description: Timestamp of the most recent status update.
-    OutageReport:
-      type: object
-      description: An outage report submitted by a customer.
-      required:
-        - serviceAddress
-        - accountNumber
-      properties:
-        accountNumber:
-          type: string
-          description: Customer account number.
-        serviceAddress:
-          type: object
-          description: Service address experiencing the outage.
-          required:
-            - streetAddress
-            - zipCode
-          properties:
-            streetAddress:
-              type: string
-            city:
-              type: string
-            state:
-              type: string
-              default: FL
-            zipCode:
-              type: string
-        contactPhone:
-          type: string
-          description: Customer contact phone number for follow-up.
-        hazardObserved:
-          type: boolean
-          description: Whether a hazardous condition (downed line, sparking) was observed.
-        hazardDescription:
-          type: string
-          description: Description of any observed hazard.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
