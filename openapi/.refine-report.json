@@ -1,0 +1,22 @@
+{
+  "provider": "teco-energy",
+  "sources": [
+    "teco-energy-accounts-api-openapi.yml",
+    "teco-energy-billing-api-openapi.yml",
+    "teco-energy-energy-usage-api-openapi.yml",
+    "teco-energy-outages-api-openapi.yml",
+    "teco-energy-service-requests-api-openapi.yml"
+  ],
+  "outputs": [
+    "teco-energy-accounts-api-openapi.yml",
+    "teco-energy-billing-api-openapi.yml",
+    "teco-energy-energy-usage-api-openapi.yml",
+    "teco-energy-outages-api-openapi.yml",
+    "teco-energy-service-requests-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
