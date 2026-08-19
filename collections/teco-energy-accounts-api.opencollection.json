@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tampa Electric Account Accounts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Account Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/accounts/:accountNumber",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "Customer account number."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve account information for a Tampa Electric customer account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

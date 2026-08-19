@@ -1,0 +1,59 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tampa Electric Account Accounts Energy Usage API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Energy Usage",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Energy Usage History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/accounts/:accountNumber/usage",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "Customer account number."
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date for usage history (ISO 8601 format)."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date for usage history (ISO 8601 format)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Data interval granularity."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve historical energy usage data for a customer account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

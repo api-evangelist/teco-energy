@@ -1,0 +1,103 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tampa Electric Account Accounts Billing API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Billing",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Bills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/accounts/:accountNumber/bills",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "Customer account number."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of bills to return."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve billing history for a customer account."
+        },
+        {
+          "info": {
+            "name": "Get Bill Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/accounts/:accountNumber/bills/:billId",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "Customer account number."
+              },
+              {
+                "name": "billId",
+                "value": "",
+                "type": "path",
+                "description": "Unique bill identifier."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed information for a specific bill."
+        },
+        {
+          "info": {
+            "name": "Make Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tecoenergy.com/v1/accounts/:accountNumber/payments",
+            "params": [
+              {
+                "name": "accountNumber",
+                "value": "",
+                "type": "path",
+                "description": "Customer account number."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submit a payment for a Tampa Electric customer account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

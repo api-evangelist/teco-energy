@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Tampa Electric Account Accounts Outages API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Outages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Active Outages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/outages",
+            "params": [
+              {
+                "name": "county",
+                "value": "",
+                "type": "query",
+                "description": "Filter outages by Florida county name."
+              },
+              {
+                "name": "zipCode",
+                "value": "",
+                "type": "query",
+                "description": "Filter outages by ZIP code."
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by outage status."
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "Page number for pagination."
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Number of results per page."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a list of current active outages within the Tampa Electric service territory."
+        },
+        {
+          "info": {
+            "name": "Get Outage Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/outages/:outageId",
+            "params": [
+              {
+                "name": "outageId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for the outage event."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed information about a specific outage by its ID."
+        },
+        {
+          "info": {
+            "name": "Report Power Outage",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.tecoenergy.com/v1/outages/report",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submit a power outage report for a specific service address."
+        },
+        {
+          "info": {
+            "name": "Get Outage Map Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.tecoenergy.com/v1/outages/map",
+            "params": [
+              {
+                "name": "bounds",
+                "value": "",
+                "type": "query",
+                "description": "Geographic bounding box (minLat,minLng,maxLat,maxLng)."
+              }
+            ]
+          },
+          "docs": "Retrieve geographic outage data suitable for rendering on a map."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
