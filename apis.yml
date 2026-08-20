@@ -60,6 +60,8 @@ apis:
   humanURL: https://developer.tecoenergy.com/
   baseURL: https://developer.tecoenergy.com
   tags:
+  - Account
+  tags_raw:
   - Accounts
   properties:
   - type: OpenAPI
