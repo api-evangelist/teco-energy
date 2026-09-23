@@ -1,7 +1,9 @@
 ---
 title: Foxconn eyes $1 trillion AI data centre market with TECO ...
 url: https://invezz.com/news/2025/07/30/foxconn-eyes-1-trillion-ai-data-centre-market-with-teco-stake/
-date: '2026-05-25'
+published: '2025-07-30'
+date_basis: url-derived
+harvested: '2026-05-25'
 query: '"TECO Energy" press release artificial intelligence'
 position: 2
 source: serpapi-google

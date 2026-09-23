@@ -1,22 +1,35 @@
 {
   "provider": "teco-energy",
   "sources": [
-    "teco-energy-accounts-api-openapi.yml",
-    "teco-energy-billing-api-openapi.yml",
-    "teco-energy-energy-usage-api-openapi.yml",
-    "teco-energy-outages-api-openapi.yml",
-    "teco-energy-service-requests-api-openapi.yml"
+    "_original/teco-energy-account-openapi.yml",
+    "_original/teco-energy-outage-openapi.yml"
   ],
   "outputs": [
     "teco-energy-accounts-api-openapi.yml",
     "teco-energy-billing-api-openapi.yml",
     "teco-energy-energy-usage-api-openapi.yml",
-    "teco-energy-outages-api-openapi.yml",
-    "teco-energy-service-requests-api-openapi.yml"
+    "teco-energy-service-requests-api-openapi.yml",
+    "teco-energy-outages-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "teco-energy-account-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "teco-energy-account-openapi.yml: declared missing tag: Accounts",
+    "teco-energy-account-openapi.yml: declared missing tag: Billing",
+    "teco-energy-account-openapi.yml: declared missing tag: Energy Usage",
+    "teco-energy-account-openapi.yml: declared missing tag: Service Requests",
+    "teco-energy-outage-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "teco-energy-outage-openapi.yml: declared missing tag: Outages",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "teco-energy-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "teco-energy-billing-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "teco-energy-energy-usage-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "teco-energy-outages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "teco-energy-service-requests-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

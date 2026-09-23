@@ -1,7 +1,7 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: Tampa Electric Account Accounts Outages API
-  description: The Tampa Electric Account API provides programmatic access to customer account management capabilities including billing, energy usage history, payment processing, service requests, and energy efficiency programs. Used by residential and commercial customers and authorized third-party applications through the Tampa Electric developer portal.
+  title: Tampa Electric Outage Outages API
+  description: The Tampa Electric Outage API provides programmatic access to power outage reporting, outage status tracking, and restoration information for the Tampa Electric service territory in west central Florida. Enables customers and partners to report outages, retrieve outage status, and access restoration estimated times for affected service addresses.
   version: 1.0.0
   contact:
     url: https://developer.tecoenergy.com/
