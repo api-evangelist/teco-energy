@@ -127,26 +127,6 @@ paths:
           description: Unauthorized.
 components:
   schemas:
-    PaymentRequest:
-      type: object
-      required:
-      - amount
-      - paymentMethod
-      properties:
-        amount:
-          type: number
-          format: double
-          description: Payment amount in USD.
-        paymentMethod:
-          type: string
-          enum:
-          - bank-account
-          - credit-card
-          - debit-card
-        paymentDate:
-          type: string
-          format: date
-          description: Date to process the payment. Defaults to today.
     Bill:
       type: object
       description: A Tampa Electric utility bill.
@@ -196,6 +176,26 @@ components:
               amount:
                 type: number
                 format: double
+    PaymentRequest:
+      type: object
+      required:
+      - amount
+      - paymentMethod
+      properties:
+        amount:
+          type: number
+          format: double
+          description: Payment amount in USD.
+        paymentMethod:
+          type: string
+          enum:
+          - bank-account
+          - credit-card
+          - debit-card
+        paymentDate:
+          type: string
+          format: date
+          description: Date to process the payment. Defaults to today.
   securitySchemes:
     bearerAuth:
       type: http
