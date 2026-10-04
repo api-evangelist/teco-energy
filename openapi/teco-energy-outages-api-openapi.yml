@@ -187,41 +187,6 @@ paths:
                           type: string
 components:
   schemas:
-    OutageReport:
-      type: object
-      description: An outage report submitted by a customer.
-      required:
-      - serviceAddress
-      - accountNumber
-      properties:
-        accountNumber:
-          type: string
-          description: Customer account number.
-        serviceAddress:
-          type: object
-          description: Service address experiencing the outage.
-          required:
-          - streetAddress
-          - zipCode
-          properties:
-            streetAddress:
-              type: string
-            city:
-              type: string
-            state:
-              type: string
-              default: FL
-            zipCode:
-              type: string
-        contactPhone:
-          type: string
-          description: Customer contact phone number for follow-up.
-        hazardObserved:
-          type: boolean
-          description: Whether a hazardous condition (downed line, sparking) was observed.
-        hazardDescription:
-          type: string
-          description: Description of any observed hazard.
     Outage:
       type: object
       description: A power outage event in the Tampa Electric service territory.
@@ -277,6 +242,41 @@ components:
           type: string
           format: date-time
           description: Timestamp of the most recent status update.
+    OutageReport:
+      type: object
+      description: An outage report submitted by a customer.
+      required:
+      - serviceAddress
+      - accountNumber
+      properties:
+        accountNumber:
+          type: string
+          description: Customer account number.
+        serviceAddress:
+          type: object
+          description: Service address experiencing the outage.
+          required:
+          - streetAddress
+          - zipCode
+          properties:
+            streetAddress:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+              default: FL
+            zipCode:
+              type: string
+        contactPhone:
+          type: string
+          description: Customer contact phone number for follow-up.
+        hazardObserved:
+          type: boolean
+          description: Whether a hazardous condition (downed line, sparking) was observed.
+        hazardDescription:
+          type: string
+          description: Description of any observed hazard.
   securitySchemes:
     bearerAuth:
       type: http
