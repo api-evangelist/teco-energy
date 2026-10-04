@@ -157,6 +157,9 @@ apis:
   - type: JSONSchema
     url: json-schema/teco-energy-account-schema.json
 common:
+- type: CapabilityMap
+  url: capabilities/teco-energy-capability-edges.yml
+  name: TECO Energy Business Capability Map
 - type: AgenticAccess
   url: agentic-access/teco-energy-agentic-access.yml
 - type: DomainSecurity
