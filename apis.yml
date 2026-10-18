@@ -57,6 +57,12 @@ apis:
   - Electric Utility
   - Energy
   - API Management
+  - Microsoft Azure
+  - Tampa Electric
+  tags_raw:
+  - Electric Utility
+  - Energy
+  - API Management
   - Azure
   - Tampa Electric
   properties:
