@@ -1,4 +1,4 @@
-# TECO Energy (teco-energy)
+# TECO Energy
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,106 +66,163 @@
 
 TECO Energy is an energy holding company and subsidiary of Emera Inc., operating Tampa Electric (electric utility serving west central Florida) and Peoples Gas (natural gas utility serving Florida). TECO Energy provides a developer portal powered by Azure API Management at developer.tecoenergy.com, exposing APIs for outage management, account services, energy usage, billing, and grid operations. Tampa Electric serves approximately 800,000 customers across the Tampa Bay area and parts of central Florida.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/teco-energy/refs/heads/main/apis.yml)
+**Areas:** Energy · Utilities · Electric · Natural Gas · Smart Grid · Tampa Bay · Fortune 1000
 
-## Scope
+## TECO Energy on APIs.io
 
-- **Type:** Index
+Everything profiled for TECO Energy is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/teco-energy/](https://apis.io/providers/teco-energy/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (6)
 
-- Energy
-- Utilities
-- Electric
-- Natural Gas
-- Smart Grid
-- Tampa Bay
+- [Tampa Electric API Management](https://apis.io/apis/teco-energy/developer-api/) — Tampa Electric provides a developer portal powered by Azure API Management at developer.tecoenergy.com. The portal enables developers to discover APIs,…
+- [TECO Energy Accounts API](https://apis.io/apis/teco-energy/teco-energy-accounts-api/) — The Accounts API from TECO Energy — 1 operation(s) for accounts.
+- [TECO Energy Billing API](https://apis.io/apis/teco-energy/teco-energy-billing-api/) — The Billing API from TECO Energy — 3 operation(s) for billing.
+- [TECO Energy Usage API](https://apis.io/apis/teco-energy/teco-energy-energy-usage-api/) — The Energy Usage API from TECO Energy — 1 operation(s) for energy usage.
+- [TECO Energy Outages API](https://apis.io/apis/teco-energy/teco-energy-outages-api/) — The Outages API from TECO Energy — 4 operation(s) for outages.
+- [TECO Energy Service Requests API](https://apis.io/apis/teco-energy/teco-energy-service-requests-api/) — The Service Requests API from TECO Energy — 1 operation(s) for service requests.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-24
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Tampa Electric API Management
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Tampa Electric provides a developer portal powered by Azure API Management at developer.tecoenergy.com. The portal enables developers to discover APIs, review documentation, try APIs interactively, and sign up for API keys. APIs likely include outage management, account services, energy usage data, billing, and grid operations. Authentication is required to access the full API catalog.
+- [Teco Energy Agentic Access](https://apis.io/agentic-access/teco-energy/teco-energy-agentic-access/)
 
-- **Human URL:** [https://developer.tecoenergy.com/](https://developer.tecoenergy.com/)
-- **Base URL:** `https://developer.tecoenergy.com`
+#### JSON Schema (2)
 
-#### Tags
+The data models the API reads and writes.
 
-- Electric Utility
-- Energy
-- API Management
-- Azure
-- Tampa Electric
+- [Tampa Electric Customer Account](https://apis.io/schemas/teco-energy/teco-energy-account/)
+- [Tampa Electric Outage](https://apis.io/schemas/teco-energy/teco-energy-outage/)
 
-#### Properties
+#### JSON Structure (1)
 
-- [Documentation](https://developer.tecoenergy.com/)
-- [Developer Portal](https://developer.tecoenergy.com/)
-- [Postman Collection](collections/teco-energy-account.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/teco-energy-account.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/teco-energy-outage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/teco-energy-outage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-### Tampa Electric Outage API
+- [Teco Energy Outage Structure](https://apis.io/json-structure/teco-energy/teco-energy-outage-structure/)
 
-Tampa Electric exposes outage reporting and outage map data through its customer portal and API infrastructure. The outage map at account.tecoenergy.com/Outage/Outagemap enables customers to report and track power outages, serving as the foundation for utility outage management APIs covering outage creation, status, restoration times, and affected customer counts.
+#### JSON-LD (1)
 
-- **Human URL:** [https://account.tecoenergy.com/Outage/Outagemap](https://account.tecoenergy.com/Outage/Outagemap)
-- **Base URL:** `https://account.tecoenergy.com`
+Linked-data contexts for the provider's vocabulary.
 
-#### Tags
+- [Teco Energy Context](https://apis.io/jsonld/teco-energy/teco-energy-context/)
 
-- Outage
-- Electric Utility
-- Grid Operations
-- Reliability
+#### Vocabulary (1)
 
-#### Properties
+The provider's domain terms, defined.
 
-- [Documentation](https://account.tecoenergy.com/Outage/Outagemap)
-- [OpenAPI](openapi/teco-energy-outage-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/teco-energy-outage.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/teco-energy-outage.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/teco-energy-outage-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Teco Energy Vocabulary](https://apis.io/vocabularies/teco-energy/teco-energy-vocabulary/)
 
-### Tampa Electric Account API
+#### Examples (2)
 
-Tampa Electric provides customer account management services including bill payment, usage history, paperless billing enrollment, service transfers, and energy audit tools. These customer-facing services are backed by account APIs enabling programmatic access to billing data, account status, payment history, and energy efficiency recommendations for residential and commercial customers.
+Example requests and responses.
 
-- **Human URL:** [https://account.tecoenergy.com/](https://account.tecoenergy.com/)
-- **Base URL:** `https://account.tecoenergy.com`
+- [Teco Energy Get Usage Example](https://apis.io/examples/teco-energy/teco-energy-get-usage-example/)
+- [Teco Energy List Outages Example](https://apis.io/examples/teco-energy/teco-energy-list-outages-example/)
 
-#### Tags
+#### Collections (7)
 
-- Account Management
-- Billing
-- Energy Usage
-- Customer Service
+Postman and Open Collection request collections.
 
-#### Properties
+- [Tampa Electric Account API](https://apis.io/collections/teco-energy/open-teco-energy-account/)
+- [Tampa Electric Account Accounts API](https://apis.io/collections/teco-energy/open-teco-energy-accounts-api/)
+- [Tampa Electric Account Accounts Billing API](https://apis.io/collections/teco-energy/open-teco-energy-billing-api/)
+- [Tampa Electric Account Accounts Energy Usage API](https://apis.io/collections/teco-energy/open-teco-energy-energy-usage-api/)
+- [Tampa Electric Outage API](https://apis.io/collections/teco-energy/open-teco-energy-outage/)
+- [Tampa Electric Account Accounts Outages API](https://apis.io/collections/teco-energy/open-teco-energy-outages-api/)
+- [Tampa Electric Account Accounts Service Requests API](https://apis.io/collections/teco-energy/open-teco-energy-service-requests-api/)
 
-- [Documentation](https://account.tecoenergy.com/)
-- [OpenAPI](openapi/teco-energy-account-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/teco-energy-account.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/teco-energy-account.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/teco-energy-account-schema.json) — [JSON Schema](https://json-schema.org/specification)
+#### Governance rules (2)
 
-## Common Properties
+Spectral rulesets for the provider's contracts.
+
+- [TECO Energy — jsonschema rules](https://apis.io/rules/teco-energy/teco-energy-jsonschema-spectral-rules/)
+- [TECO Energy API Rules](https://apis.io/rules/teco-energy/teco-energy-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Teco Energy Authentication](https://apis.io/security/teco-energy/teco-energy-authentication/)
+- [Teco Energy Domain Security](https://apis.io/security/teco-energy/teco-energy-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Teco Energy Plans Pricing](https://apis.io/plans/teco-energy/teco-energy-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Teco Energy Rate Limits](https://apis.io/rate-limits/teco-energy/teco-energy-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Teco Energy Finops](https://apis.io/finops/teco-energy/teco-energy-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.tecoenergy.com)
-- [Developer Portal](https://developer.tecoenergy.com/)
-- [Website](https://www.tampaelectric.com/)
-- [Portal](https://account.tecoenergy.com/)
-- [Status Page](https://account.tecoenergy.com/Outage/Outagemap)
-- [LinkedIn](https://www.linkedin.com/company/teco-energy)
+- [Status](https://account.tecoenergy.com/Outage/Outagemap)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 31.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 61.8 |
+| Contract governance | 13.6 |
+| Operational transparency | 21.1 |
+| Developer ergonomics | 21.4 |
+| Access clarity | 5.3 |
+
+**Agent readiness 17.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 13.9** — Energy & Utilities
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/teco-energy/](https://apis.io/providers/teco-energy/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for TECO Energy: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/teco-energy/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
